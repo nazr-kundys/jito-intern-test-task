@@ -3,10 +3,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML to JSON</title>
-    <script src="html2json.js"></script>
+    <script type="module" src="html2json.js" defer></script>
     <style>
       h1 {
-        font-family: sans-serif
+        font-family: sans-serif;
       }
       body {
         display: flex;
@@ -60,10 +60,9 @@
       </div>
     </div>
     <div class="buttons">
-      <button onclick="convertHtml2JsonAndSet()">Convert to JSON</button>
-      <button onclick="showExample1()">Input Example 1</button>
-      <button onclick="showExample2()">Input Example 2</button>
+      <button id="convert-btn">Convert to JSON</button>
+      <button id="ex1-btn">Input Example 1</button>
+      <button id="ex2-btn">Input Example 2</button>
     </div>
   </body>
 </html>
-

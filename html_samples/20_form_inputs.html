@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form Inputs</title>
+    <style>
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        max-width: 480px;
+      }
+      label {
+        font-weight: 600;
+      }
+      input {
+        width: 100%;
+        padding: 0.5rem;
+      }
+      fieldset {
+        border: 1px solid #ccc;
+        padding: 1rem;
+      }
+      legend {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Form Inputs</h1>
+
+    <form action="/submit" method="POST" enctype="multipart/form-data" novalidate>
+      <!-- Text inputs -->
+      <fieldset>
+        <legend>Text Inputs</legend>
+
+        <label for="name">Full Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="John Doe"
+          autocomplete="name"
+          required
+          minlength="2"
+          maxlength="100"
+        />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="new-password" required minlength="8" />
+
+        <label for="search">Search</label>
+        <input type="search" id="search" name="q" placeholder="Search…" />
+
+        <label for="url">Website</label>
+        <input type="url" id="url" name="url" placeholder="https://example.com" />
+
+        <label for="tel">Phone</label>
+        <input type="tel" id="tel" name="tel" pattern="[0-9+\-\s]+" />
+      </fieldset>
+
+      <!-- Numeric inputs -->
+      <fieldset>
+        <legend>Numeric Inputs</legend>
+
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="0" max="120" step="1" />
+
+        <label for="rating">Rating (0–10)</label>
+        <input type="range" id="rating" name="rating" min="0" max="10" step="0.5" value="5" />
+
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" min="0" step="0.01" />
+      </fieldset>
+
+      <!-- Date / time -->
+      <fieldset>
+        <legend>Date &amp; Time</legend>
+
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" />
+
+        <label for="appt">Appointment Time</label>
+        <input type="datetime-local" id="appt" name="appt" />
+
+        <label for="month">Month</label>
+        <input type="month" id="month" name="month" />
+
+        <label for="week">Week</label>
+        <input type="week" id="week" name="week" />
+
+        <label for="time">Time</label>
+        <input type="time" id="time" name="time" />
+      </fieldset>
+
+      <!-- Choice inputs -->
+      <fieldset>
+        <legend>Choices</legend>
+
+        <!-- Checkboxes -->
+        <p>Interests:</p>
+        <label><input type="checkbox" name="interest" value="tech" checked /> Technology</label>
+        <label><input type="checkbox" name="interest" value="design" /> Design</label>
+        <label><input type="checkbox" name="interest" value="music" disabled /> Music</label>
+
+        <!-- Radio buttons -->
+        <p>Gender:</p>
+        <label><input type="radio" name="gender" value="m" /> Male</label>
+        <label><input type="radio" name="gender" value="f" /> Female</label>
+        <label><input type="radio" name="gender" value="other" /> Other</label>
+
+        <!-- Select / option -->
+        <label for="country">Country</label>
+        <select id="country" name="country" required>
+          <option value="" disabled selected>Choose a country…</option>
+          <optgroup label="Europe">
+            <option value="ua">Ukraine</option>
+            <option value="de">Germany</option>
+            <option value="fr">France</option>
+          </optgroup>
+          <optgroup label="Americas">
+            <option value="us">United States</option>
+            <option value="ca">Canada</option>
+          </optgroup>
+        </select>
+
+        <!-- Multi-select -->
+        <label for="tags">Tags (hold Ctrl / Cmd for multiple)</label>
+        <select id="tags" name="tags" multiple size="4">
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="js">JavaScript</option>
+          <option value="ts">TypeScript</option>
+        </select>
+
+        <!-- Datalist -->
+        <label for="browser">Favourite Browser</label>
+        <input type="text" id="browser" name="browser" list="browsers" />
+        <datalist id="browsers">
+          <option value="Chrome" />
+          <option value="Firefox" />
+          <option value="Safari" />
+          <option value="Edge" />
+        </datalist>
+      </fieldset>
+
+      <!-- Text areas -->
+      <fieldset>
+        <legend>Long-form Text</legend>
+
+        <label for="bio">Bio</label>
+        <textarea
+          id="bio"
+          name="bio"
+          rows="4"
+          cols="40"
+          placeholder="Tell us about yourself…"
+          maxlength="500"
+        ></textarea>
+
+        <label for="code">Code Snippet</label>
+        <textarea id="code" name="code" rows="6" spellcheck="false" autocomplete="off">
+const x = 1 < 2 && 3 > 2;</textarea
+        >
+      </fieldset>
+
+      <!-- File upload -->
+      <fieldset>
+        <legend>File Upload</legend>
+
+        <label for="avatar">Avatar (JPEG / PNG)</label>
+        <input type="file" id="avatar" name="avatar" accept="image/jpeg,image/png" />
+
+        <label for="docs">Documents (multiple)</label>
+        <input type="file" id="docs" name="docs" accept=".pdf,.docx" multiple />
+      </fieldset>
+
+      <!-- Hidden + colour + misc -->
+      <input type="hidden" name="csrf" value="abc123def456" />
+      <input type="hidden" name="source" value="landing-page" />
+
+      <label for="theme">Theme Colour</label>
+      <input type="color" id="theme" name="theme" value="#1a1a2e" />
+
+      <!-- Buttons -->
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+        <button type="button" class="btn btn-ghost" onclick="alert('clicked')">Preview</button>
+        <input type="submit" value="Submit (input)" />
+        <input type="image" src="submit.png" alt="Submit" width="80" height="30" />
+      </div>
+    </form>
+  </body>
+</html>

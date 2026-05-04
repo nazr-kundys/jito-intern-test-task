@@ -1,0 +1,33 @@
+<!-- Orphan open tags: opened but never closed (EOF closes them implicitly) -->
+
+<!-- 1. Single unclosed block element at EOF -->
+<div id="never-closed">
+  <p>This paragraph is inside a div that is never closed.
+
+<!-- 2. Multiple unclosed elements stacked -->
+<section>
+  <article>
+    <header>
+      <h2>Unclosed header, article, and section
+
+<!-- 3. Unclosed inline elements -->
+<p>Text with <strong>unclosed strong and <em>unclosed em inside it</p>
+
+<!-- 4. Unclosed elements interrupted by a sibling open tag -->
+<ul>
+  <li>First item
+  <li>Second item — previous li not closed, this one neither
+  <li>Third item
+
+<!-- 5. Unclosed element after valid closed siblings -->
+<div class="closed-sibling">
+  <p>This div is properly closed.</p>
+</div>
+<div class="unclosed-sibling">
+  <p>This div opens but never closes.
+  <span>Span inside also never closes.
+
+<!-- 6. Head-level element opened in body context, never closed -->
+<style>
+  body { color: red; }
+  /* no closing style tag — raw text consumes to EOF -->

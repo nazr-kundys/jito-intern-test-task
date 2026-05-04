@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Script Variants</title>
+
+  <!-- External script — no body, self-contained -->
+  <script src="vendor.js"></script>
+  <script src="app.js" defer></script>
+  <script src="analytics.js" async></script>
+
+  <!-- Inline JS: comparison operators, bitwise, template literals -->
+  <script>
+    const a = 1 < 2;
+    const b = 3 > 2;
+    const c = a && b;
+    const d = a || b;
+    const html = `<div class="box">Hello &amp; world</div>`;
+    const tag  = '<script>';
+    const end  = '<' + '/script>';
+  </script>
+
+  <!-- Inline JS: looks like a closing tag inside a string — must NOT end the block -->
+  <script>
+    // This should not close the script: </script>
+    /* Neither should this: </script> */
+    const sneaky = "</script>";
+    const also   = '\u003c/script\u003e';
+    console.log('still inside the script block');
+  </script>
+
+  <!-- ESM module -->
+  <script type="module">
+    import { html2json } from './esm/html2json.js';
+    const result = html2json(document.documentElement.outerHTML);
+    console.log(result);
+  </script>
+
+  <!-- JSON data island — not executed as JS -->
+  <script type="application/json" id="page-data">
+    {
+      "user": { "id": 42, "name": "Nazar" },
+      "flags": ["beta", "new-ui"],
+      "html": "<p>raw html inside json</p>",
+      "comparison": "1 < 2 && 3 > 2"
+    }
+  </script>
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Script Variants Test",
+      "description": "Tests various <script> element shapes"
+    }
+  </script>
+</head>
+<body>
+  <h1>Script variants</h1>
+  <p>This page tests all common <code>&lt;script&gt;</code> element shapes.</p>
+
+  <!-- Inline script in body -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('li');
+      items.forEach((el, i) => {
+        if (i % 2 === 0) el.style.background = '#f0f0f0';
+      });
+    });
+  </script>
+</body>
+</html>

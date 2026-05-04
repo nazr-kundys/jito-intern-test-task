@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Style Parsing</title>
+
+  <!-- Single rule, single property -->
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+  </style>
+
+  <!-- Multiple rules, multiple properties -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+  </style>
+
+  <!-- Child combinator > and sibling combinators -->
+  <style>
+    nav > ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav > ul > li {
+      display: inline-block;
+    }
+    h2 + p {
+      margin-top: 0;
+    }
+    h2 ~ p {
+      color: #555;
+    }
+  </style>
+
+  <!-- Pseudo-classes and pseudo-elements -->
+  <style>
+    a:hover {
+      color: #0066cc;
+      text-decoration: underline;
+    }
+    a:focus {
+      outline: 2px solid #0066cc;
+    }
+    li:first-child {
+      font-weight: bold;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+    li:nth-child(2n) {
+      background: #eee;
+    }
+    p::before {
+      content: '';
+      display: block;
+    }
+    p::after {
+      content: '';
+    }
+  </style>
+
+  <!-- Attribute selectors — contain > and = chars -->
+  <style>
+    input[type="text"] {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+    }
+    input[type="submit"] {
+      background: #0066cc;
+      color: #fff;
+    }
+    a[href^="https"] {
+      color: green;
+    }
+    a[href$=".pdf"] {
+      color: red;
+    }
+  </style>
+
+  <!-- @-rules — should be skipped by the CSS parser -->
+  <style>
+    @import url('base.css');
+
+    @media (max-width: 768px) {
+      body {
+        font-size: 14px;
+      }
+      nav > ul {
+        flex-direction: column;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* A regular rule after @-rules to confirm parser continues */
+    .visible {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Style parsing test</h1>
+  <p>Check that all the style blocks above are parsed into structured CSS rule objects.</p>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mixed Valid and Invalid</title>
+</head>
+<body>
+
+  <!-- Block 1: valid structure -->
+  <section id="s1">
+    <h2>Valid Section</h2>
+    <p>Everything here is well-formed HTML.</p>
+  </section>
+
+  <!-- Block 2: orphan close tags injected mid-document -->
+  </article>
+  </aside>
+  </figure>
+
+  <!-- Block 3: valid structure resumes after orphan closes -->
+  <section id="s2">
+    <h2>Recovery After Orphan Closes</h2>
+    <p>The parser should have discarded the three orphan close tags above
+       and be back in a normal state here.</p>
+  </section>
+
+  <!-- Block 4: missing close tags inside a valid parent -->
+  <div id="missing-closes">
+    <p>Paragraph one — not closed
+    <p>Paragraph two — not closed
+    <p>Paragraph three — not closed
+  </div>
+
+  <!-- Block 5: invalid tag name, then recovery -->
+  <3rd-section>invalid open</3rd-section>
+  <section id="s3">
+    <h2>Recovery After Invalid Tag Name</h2>
+    <p>This section should parse normally.</p>
+  </section>
+
+  <!-- Block 6: deeply invalid attribute soup, valid content after -->
+  <div id= class= style=>
+    <p>Content inside a badly-attributed div.</p>
+  </div>
+  <p>Paragraph after the badly-attributed div — should be fine.</p>
+
+  <!-- Block 7: close tag for something that was never opened -->
+  </video>
+  </canvas>
+  <p>Text after spurious video/canvas close tags.</p>
+
+  <!-- Block 8: self-closing on a non-void element, then children outside -->
+  <div id="self-closed-non-void" />
+  <p>This paragraph follows a self-closed div — it ends up as a sibling, not a child.</p>
+
+  <!-- Block 9: interleaved/overlapping tags (not properly nested) -->
+  <b><i>bold-italic</b></i>
+  <p>Text after overlapping inline tags.</p>
+
+  <!-- Block 10: valid closing section -->
+  <footer>
+    <p>&copy; 2024 — Valid footer at the end.</p>
+  </footer>
+
+</body>
+</html>

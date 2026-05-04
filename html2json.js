@@ -1,19 +1,48 @@
+'use strict';
+
+import { coerceToString } from './lib/coerce.js';
+import { tokenize } from './lib/tokenizer.js';
+import { buildTree } from './lib/parser.js';
+import { normalizeDocument } from './lib/normalizer.js';
+import { pruneDocument } from './lib/pruner.js';
+import { makeDoctypeNode, makeElement } from './lib/nodes.js';
+import { STRUCTURAL_TAGS, DEFAULT_DOCTYPE } from './lib/constants.js';
+
+document.getElementById('convert-btn').addEventListener('click', convertHtml2JsonAndSet);
+document.getElementById('ex1-btn').addEventListener('click', showExample1);
+document.getElementById('ex2-btn').addEventListener('click', showExample2);
+
 function convertHtml2JsonAndSet() {
-  const htmlTextAreaValue = document.getElementById("html").value;
+  const htmlTextAreaValue = document.getElementById('html').value;
+  console.log(htmlTextAreaValue);
   const jsonObj = html2json(htmlTextAreaValue);
-  const jsonArea = document.getElementById("json");
+  const jsonArea = document.getElementById('json');
   jsonArea.textContent = JSON.stringify(jsonObj, null, 2);
 }
 
-/* 
-  Update this function to convert html into json object.
-  You can rewrite it completely, just be sure it accepts htmlText as string and outputs json object.
-*/
+/**
+ * Converts HTML into a JSON node tree representing its HTML structure.
+ */
 function html2json(htmlText) {
-  return {
-    "Conversion results": "should be instead of this json obj",
-    "Just to show that it is dynamic value (input length)" : htmlText.length,
-  };
+  const html = coerceToString(htmlText);
+
+  try {
+    const tokens = tokenize(html);
+    const nodes = buildTree(tokens);
+    const document = normalizeDocument(nodes);
+    return pruneDocument(document);
+  } catch {
+    // Last-resort fallback — produce the minimal valid document shape directly,
+    // bypassing the pipeline. `type` is stripped here too for consistency.
+    const doctype = makeDoctypeNode(`DOCTYPE ${DEFAULT_DOCTYPE}`);
+    const htmlEl = makeElement(STRUCTURAL_TAGS.HTML, {}, [
+      makeElement(STRUCTURAL_TAGS.HEAD, {}),
+      makeElement(STRUCTURAL_TAGS.BODY, {}),
+    ]);
+    delete doctype.type;
+    delete htmlEl.type;
+    return pruneDocument({ doctype, html: htmlEl });
+  }
 }
 
 function showExample1() {
@@ -54,18 +83,14 @@ function showExample1() {
 </html>
 `;
   const jsonContent = {
-    "Comment 1":
-      "You have to think about how to take into account various html inputs so your json structure will cover them all and handle different cases.",
-    "Comment 2":
-      "When you make any choice in terms of selecting specific json structure for conversion - be ready to provide reasoning behind such choice.",
+    'Comment 1':
+      'You have to think about how to take into account various html inputs so your json structure will cover them all and handle different cases.',
+    'Comment 2':
+      'When you make any choice in terms of selecting specific json structure for conversion - be ready to provide reasoning behind such choice.',
   };
 
-  document.getElementById("html").value = htmlExample;
-  document.getElementById("json").textContent = JSON.stringify(
-    jsonContent,
-    null,
-    2
-  );
+  document.getElementById('html').value = htmlExample;
+  document.getElementById('json').textContent = JSON.stringify(jsonContent, null, 2);
 }
 
 function showExample2() {
@@ -76,16 +101,12 @@ function showExample2() {
 </div>
 `;
   const jsonContent = {
-    "Comment 1":
-      "You have to think about how to take into account various html inputs so your json structure will cover them all and handle different cases.",
-    "Comment 2":
-      "When you make any choice in terms of selecting specific json structure for conversion - be ready to provide reasoning behind such choice.",
+    'Comment 1':
+      'You have to think about how to take into account various html inputs so your json structure will cover them all and handle different cases.',
+    'Comment 2':
+      'When you make any choice in terms of selecting specific json structure for conversion - be ready to provide reasoning behind such choice.',
   };
 
-  document.getElementById("html").value = htmlExample;
-  document.getElementById("json").textContent = JSON.stringify(
-    jsonContent,
-    null,
-    2
-  );
+  document.getElementById('html').value = htmlExample;
+  document.getElementById('json').textContent = JSON.stringify(jsonContent, null, 2);
 }

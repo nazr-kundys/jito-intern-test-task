@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { margin: 0; }
+    .card > p { color: red; }
+    a[href="<fake>"] { display: none; }
+  </style>
+  <script>
+    const x = 1 < 2 && 3 > 1;
+    document.querySelector('div > p').innerHTML = "<b>Hi</b>";
+    // </script> inside a comment — should not end the block
+  </script>
+  <script type="application/json">
+    { "key": "<value>", "arr": [1, 2, 3] }
+  </script>
+</head>
+<body><p>Rendered</p></body>
+</html>

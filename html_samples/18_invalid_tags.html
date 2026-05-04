@@ -1,0 +1,38 @@
+<!-- Invalid tag names — various forms the parser must not crash on -->
+
+<!-- 1. Tag name starts with a digit -->
+<1st-element>content</1st-element>
+<2div>text</2div>
+<42>number tag</42>
+
+<!-- 2. Empty tag name -->
+<>empty open</>
+< >space-only tag name< />
+
+<!-- 3. Tag name is only special characters -->
+<->dash only<-->
+<.classname>dot prefix</.classname>
+<#hash>hash prefix</#hash>
+<@at>at prefix</@at>
+
+<!-- 4. Extremely long "tag name" (no real tag, should become text) -->
+<thisisaverylongstringthatisnotarealtagnameatallbuttheparser
+shouldhandleitgracefully>content</thisisaverylongstringthatisnotarealtagnameatallbuttheparsershouldhandleitgracefully>
+
+<!-- 5. Tags with raw angle brackets in attribute values (no quotes) -->
+<div data-val=a>b>c>text</div>
+<div data-val=a<b>text</div>
+
+<!-- 6. Completely broken angle-bracket soup -->
+<<<<nested angles>>>>
+< < <spaced<< angles>> > >
+<div><<<<</div>
+
+<!-- 7. Valid tag sandwiched between invalid ones — parser should recover -->
+<999invalid>junk before</999invalid>
+<p id="valid-recovery">This paragraph should be correctly parsed.</p>
+<@@@>junk after</@@@>
+
+<!-- 8. Tag-like content that is actually text -->
+3 < 5 and 10 > 7 without any tag context
+AT&T and M&Ms

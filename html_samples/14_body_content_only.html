@@ -1,0 +1,32 @@
+<h1>Page Title</h1>
+<p>This file has <strong>no html, head, or body tags</strong> at all — just raw content.</p>
+
+<nav>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+</nav>
+
+<div class="wrapper">
+  <section>
+    <h2>Section One</h2>
+    <p>Paragraph inside a section inside a div, no wrapping document structure.</p>
+    <ul>
+      <li>Item A</li>
+      <li>Item B</li>
+      <li>Item C</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Section Two</h2>
+    <p>Another section. The parser should synthesise <code>html</code>, <code>head</code>,
+    and <code>body</code> around all of this.</p>
+    <blockquote cite="https://example.com">
+      <p>A quoted passage from somewhere.</p>
+    </blockquote>
+  </section>
+</div>
+
+<footer>
+  <small>&copy; 2024</small>
+</footer>

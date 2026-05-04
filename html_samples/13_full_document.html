@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A complete real-world page sample" />
+    <meta name="author" content="Nazar" />
+    <title>Full Document Sample</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        line-height: 1.6;
+      }
+      header {
+        background: #1a1a2e;
+        color: #fff;
+        padding: 1rem 2rem;
+      }
+      nav > ul {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+      footer {
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header role="banner">
+      <h1>My Application</h1>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="/" aria-current="page">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content" role="main">
+      <section aria-labelledby="hero-heading">
+        <h2 id="hero-heading">Welcome</h2>
+        <p>This is a <strong>full HTML document</strong> sample with <em>rich structure</em>.</p>
+        <a href="/get-started" class="btn btn-primary" data-tracking="cta-hero">Get Started</a>
+      </section>
+
+      <section aria-labelledby="cards-heading">
+        <h2 id="cards-heading">Feature Cards</h2>
+        <div class="grid" data-columns="3">
+          <article class="card" data-id="1">
+            <h3>Fast</h3>
+            <p>Built for performance from the ground up.</p>
+            <img src="fast.svg" alt="Lightning bolt icon" width="48" height="48" loading="lazy" />
+          </article>
+          <article class="card" data-id="2">
+            <h3>Secure</h3>
+            <p>Security is baked in, not bolted on.</p>
+            <img src="secure.svg" alt="Shield icon" width="48" height="48" loading="lazy" />
+          </article>
+          <article class="card" data-id="3">
+            <h3>Accessible</h3>
+            <p>Meets WCAG 2.1 AA standards.</p>
+            <img src="a11y.svg" alt="Accessibility icon" width="48" height="48" loading="lazy" />
+          </article>
+        </div>
+      </section>
+
+      <aside aria-label="Tip">
+        <p><strong>Tip:</strong> Use keyboard navigation to explore this page.</p>
+      </aside>
+    </main>
+
+    <footer role="contentinfo">
+      <p>&copy; 2024 My Application. All rights reserved.</p>
+      <p>
+        <a href="/privacy">Privacy Policy</a> &middot;
+        <a href="/terms">Terms of Service</a>
+      </p>
+    </footer>
+
+    <script src="app.js" defer></script>
+    <script type="module">
+      import { init } from './init.js';
+      init({ debug: false, version: '1.0.0' });
+    </script>
+  </body>
+</html>
