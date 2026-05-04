@@ -4,7 +4,7 @@ import { coerceToString } from './lib/coerce.js';
 import { tokenize } from './lib/tokenizer.js';
 import { buildTree } from './lib/parser.js';
 import { normalizeDocument } from './lib/normalizer.js';
-import { pruneDocument } from './lib/pruner.js';
+import { pruneNode } from './lib/pruner.js';
 import { makeDoctypeNode, makeElement } from './lib/nodes.js';
 import { STRUCTURAL_TAGS, DEFAULT_DOCTYPE } from './lib/constants.js';
 
@@ -24,25 +24,27 @@ function convertHtml2JsonAndSet() {
  * Converts HTML into a JSON node tree representing its HTML structure.
  */
 function html2json(htmlText) {
-  const html = coerceToString(htmlText);
-
   try {
-    const tokens = tokenize(html);
-    const nodes = buildTree(tokens);
-    const document = normalizeDocument(nodes);
-    return pruneDocument(document);
+    const tokens = tokenize(coerceToString(htmlText));
+    const document = normalizeDocument(buildTree(tokens));
+    pruneNode(document.html);
+    return document;
   } catch {
-    // Last-resort fallback — produce the minimal valid document shape directly,
-    // bypassing the pipeline. `type` is stripped here too for consistency.
-    const doctype = makeDoctypeNode(`DOCTYPE ${DEFAULT_DOCTYPE}`);
-    const htmlEl = makeElement(STRUCTURAL_TAGS.HTML, {}, [
-      makeElement(STRUCTURAL_TAGS.HEAD, {}),
-      makeElement(STRUCTURAL_TAGS.BODY, {}),
-    ]);
-    delete doctype.type;
-    delete htmlEl.type;
-    return pruneDocument({ doctype, html: htmlEl });
+    return fallbackDocument();
   }
+}
+
+function fallbackDocument() {
+  const htmlEl = makeElement(STRUCTURAL_TAGS.HTML, {}, [
+    makeElement(STRUCTURAL_TAGS.HEAD, {}),
+    makeElement(STRUCTURAL_TAGS.BODY, {}),
+  ]);
+  delete htmlEl.type;
+  pruneNode(htmlEl);
+  return {
+    doctype: makeDoctypeNode(`DOCTYPE ${DEFAULT_DOCTYPE}`),
+    html: htmlEl,
+  };
 }
 
 function showExample1() {
